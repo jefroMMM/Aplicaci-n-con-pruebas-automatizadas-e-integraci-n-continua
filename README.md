@@ -13,7 +13,7 @@ Aplicación en TypeScript para registrar y consultar reservas de salas de una un
 
 ## Requisitos
 
-- Node.js 22 o superior y pnpm.
+- Node.js 22 o superior y Corepack (incluido con la instalación estándar de Node.js), o pnpm instalado por separado.
 - Docker Desktop (o un daemon Docker compatible). Docker Compose se usa para ejecutar la aplicación; Testcontainers necesita Docker para las pruebas de integración.
 
 ## Ejecutar con Docker Compose
@@ -37,6 +37,16 @@ docker compose up -d db
 pnpm install --frozen-lockfile
 pnpm migrate
 pnpm dev
+```
+
+Si PowerShell no reconoce `pnpm`, usa Corepack para ejecutar los mismos comandos:
+
+```powershell
+Copy-Item .env.example .env
+docker compose up -d db
+corepack pnpm install --frozen-lockfile
+corepack pnpm migrate
+corepack pnpm dev
 ```
 
 El servidor compila la interfaz automáticamente al iniciar. Abre `http://localhost:3000`. La API requiere `DATABASE_URL`; `PORT` es opcional y por defecto usa `3000`.
@@ -63,10 +73,14 @@ curl.exe http://localhost:3000/reservations/UUID_DEVUELTO
 
 ## Pruebas
 
+Puedes usar `pnpm` directamente. Si PowerShell indica que no reconoce el comando, antepón `corepack` (por ejemplo, `corepack pnpm test:unit`). Usa una sola de las dos formas para cada comando.
+
 Instala dependencias con el lockfile:
 
 ```powershell
 pnpm install --frozen-lockfile
+# Alternativa con Corepack:
+corepack pnpm install --frozen-lockfile
 ```
 
 Ejecuta las suites separadamente y sin modo watch:
@@ -74,17 +88,22 @@ Ejecuta las suites separadamente y sin modo watch:
 ```powershell
 pnpm test:unit
 pnpm test:integration
+# Alternativa con Corepack:
+corepack pnpm test:unit
+corepack pnpm test:integration
 ```
 
 O ambas en secuencia:
 
 ```powershell
 pnpm test
+# Alternativa con Corepack:
+corepack pnpm test
 ```
 
 Las pruebas unitarias usan un repositorio de prueba para mantener la lógica aislada de PostgreSQL y verifican éxito, límites, entradas inválidas y conflictos. Las pruebas de integración arrancan un PostgreSQL temporal con `@testcontainers/postgresql`, obtienen de ese contenedor la URL de conexión, aplican las migraciones y ejercitan `PostgresReservationRepository` real. Cada prueba limpia sus filas y al final se cierran el pool y el contenedor.
 
-La base que Testcontainers crea es independiente de la base local del Compose: el conjunto de pruebas de integración no lee `DATABASE_URL` ni utiliza el contenedor persistente `db`. Requiere que Docker esté iniciado.
+La base que Testcontainers crea es independiente de la base local del Compose: el conjunto de pruebas de integración no lee `DATABASE_URL` ni utiliza el contenedor persistente `db`. Requiere que Docker esté iniciado, pero no es necesario ejecutar `docker compose up` antes de `test:integration`.
 
 ## Diseño
 
