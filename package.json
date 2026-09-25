@@ -7,6 +7,9 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "start": "tsx src/server.ts",
+    "build:ui": "tsc -p tsconfig.ui.json",
+    "predev": "pnpm build:ui",
+    "prestart": "pnpm build:ui",
     "migrate": "tsx src/db/migrate.ts",
     "test:unit": "vitest run --config vitest.unit.config.ts",
     "test:integration": "vitest run --config vitest.integration.config.ts",
@@ -14,6 +17,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@fastify/static": "^10.1.4",
     "dotenv": "^18.0.3",
     "fastify": "^5.12.5",
     "pg": "^8.23.0"

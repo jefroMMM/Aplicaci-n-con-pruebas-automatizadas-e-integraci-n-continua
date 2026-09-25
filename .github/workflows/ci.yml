@@ -31,6 +31,9 @@ jobs:
       - name: Verificar tipos TypeScript
         run: pnpm typecheck
 
+      - name: Construir la interfaz web
+        run: pnpm build:ui
+
       - name: Ejecutar pruebas unitarias
         run: pnpm test:unit
 

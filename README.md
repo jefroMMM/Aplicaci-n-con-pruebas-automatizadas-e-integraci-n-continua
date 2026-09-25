@@ -1,6 +1,6 @@
 # Reservas de salas
 
-API REST en TypeScript para registrar y consultar reservas de salas de una universidad. La aplicación persiste en PostgreSQL y aplica las reglas tanto en la capa de negocio como en una restricción de integridad de la base.
+Aplicación en TypeScript para registrar y consultar reservas de salas de una universidad. Incluye una interfaz web, una API REST y persistencia PostgreSQL. Las reglas se aplican en la capa de negocio y mediante una restricción de integridad de la base.
 
 ## Reglas de negocio
 
@@ -23,7 +23,7 @@ Copy-Item .env.example .env
 docker compose up --build
 ```
 
-Compose inicia PostgreSQL y la API. Al iniciar, la API aplica las migraciones pendientes. La API queda en `http://localhost:3000` y PostgreSQL en `localhost:5432`. Para detenerla: `docker compose down`; para borrar también los datos locales: `docker compose down -v`.
+Compose inicia PostgreSQL y la aplicación. Al iniciar, la API aplica las migraciones pendientes y compila la interfaz. Abre `http://localhost:3000` en el navegador; PostgreSQL queda en `localhost:5432`. Para detenerla: `docker compose down`; para borrar también los datos locales: `docker compose down -v`.
 
 Los valores de `.env.example` son únicamente credenciales locales de demostración. `.env` está excluido por Git. Cámbialos antes de exponer el servicio fuera de tu equipo.
 
@@ -39,9 +39,11 @@ pnpm migrate
 pnpm dev
 ```
 
-La API requiere `DATABASE_URL`; `PORT` es opcional y por defecto usa `3000`.
+El servidor compila la interfaz automáticamente al iniciar. Abre `http://localhost:3000`. La API requiere `DATABASE_URL`; `PORT` es opcional y por defecto usa `3000`.
 
-## API
+## Interfaz y API
+
+La página principal permite registrar una reserva y consultar una reserva por UUID. También se puede usar la API directamente:
 
 Crear una reserva:
 

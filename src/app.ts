@@ -1,4 +1,6 @@
 import Fastify from "fastify";
+import fastifyStatic from "@fastify/static";
+import path from "node:path";
 import {
   ReservationConflictError,
   ReservationService,
@@ -7,6 +9,10 @@ import {
 
 export function buildApp(service: ReservationService) {
   const app = Fastify({ logger: true });
+  app.register(fastifyStatic, {
+    root: path.resolve(process.cwd(), "public"),
+    prefix: "/",
+  });
 
   app.get("/health", async () => ({ status: "ok" }));
 

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f7fb" />
+    <title>Reservas de salas | Campus</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script type="module" src="/client.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Reservas de salas, inicio">
+          <span class="brand-mark" aria-hidden="true">R</span>
+          <span>Campus<span class="brand-light"> / espacios</span></span>
+        </a>
+        <div class="connection-pill" id="connection-status" role="status">
+          <span class="status-dot"></span>
+          <span id="connection-label">Conectando con la API</span>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero" aria-labelledby="page-title">
+          <div>
+            <p class="eyebrow">GESTIÓN DE ESPACIOS</p>
+            <h1 id="page-title">Encuentra tu espacio.<br /><span>Reserva tu tiempo.</span></h1>
+            <p class="hero-copy">Organiza las salas de estudio y trabajo de forma rápida y sin cruces de horario.</p>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="art-window"><span></span><span></span><span></span></div>
+            <div class="art-card art-card-back"></div>
+            <div class="art-card art-card-front"><span class="art-line wide"></span><span class="art-line"></span><span class="art-line short"></span><span class="art-check">✓</span></div>
+            <div class="art-sparkle">✳</div>
+          </div>
+        </section>
+
+        <section class="content-grid" aria-label="Administrar reservas">
+          <article class="panel booking-panel">
+            <div class="panel-heading">
+              <div class="heading-icon" aria-hidden="true">＋</div>
+              <div>
+                <p class="eyebrow">NUEVA SOLICITUD</p>
+                <h2>Reservar una sala</h2>
+              </div>
+            </div>
+            <form id="reservation-form">
+              <label for="room-name">Nombre de la sala</label>
+              <input id="room-name" name="roomName" type="text" maxlength="100" placeholder="Ej. Laboratorio 2" required />
+              <div class="field-row">
+                <div>
+                  <label for="starts-at">Inicio</label>
+                  <input id="starts-at" name="startsAt" type="datetime-local" required />
+                </div>
+                <div>
+                  <label for="ends-at">Fin</label>
+                  <input id="ends-at" name="endsAt" type="datetime-local" required />
+                </div>
+              </div>
+              <p class="field-hint">Las reservas comienzan en el futuro y duran hasta 4 horas.</p>
+              <button class="button button-primary" type="submit">
+                Confirmar reserva <span aria-hidden="true">→</span>
+              </button>
+            </form>
+            <div id="create-result" class="result-area" aria-live="polite"></div>
+          </article>
+
+          <article class="panel lookup-panel">
+            <div class="panel-heading">
+              <div class="heading-icon heading-icon-blue" aria-hidden="true">⌕</div>
+              <div>
+                <p class="eyebrow">CONSULTA</p>
+                <h2>Buscar una reserva</h2>
+              </div>
+            </div>
+            <p class="panel-copy">Consulta los detalles con el UUID que recibiste al crearla.</p>
+            <form id="lookup-form">
+              <label for="reservation-id">Identificador de reserva</label>
+              <div class="lookup-control">
+                <input id="reservation-id" name="id" type="text" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" required />
+                <button class="button button-secondary" type="submit" aria-label="Buscar reserva">Buscar</button>
+              </div>
+            </form>
+            <div id="lookup-result" class="result-area" aria-live="polite">
+              <div class="empty-state"><span class="empty-icon" aria-hidden="true">▤</span><span>Tus resultados aparecerán aquí.</span></div>
+            </div>
+          </article>
+        </section>
+
+        <section class="rules-strip" aria-label="Reglas de reserva">
+          <div class="rules-title"><span class="rules-icon" aria-hidden="true">i</span><span>Reglas claras</span></div>
+          <div class="rule"><span class="rule-check">✓</span> Hasta 4 horas por reserva</div>
+          <div class="rule"><span class="rule-check">✓</span> Sin horarios superpuestos</div>
+          <div class="rule"><span class="rule-check">✓</span> Confirmación inmediata</div>
+        </section>
+      </main>
+
+      <footer><span>Campus · Sistema de reservas</span><span>Desarrollado con TypeScript y PostgreSQL</span></footer>
+    </div>
+  </body>
+</html>
